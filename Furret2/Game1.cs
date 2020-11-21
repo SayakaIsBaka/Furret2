@@ -22,9 +22,16 @@ namespace Furret2
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private AnimatedSprite _characterSpriteAnimation;
         private System.Windows.Forms.Control _ctrl;
         private System.Windows.Forms.Form _form;
+
+        private AnimatedSprite _characterSpriteAnimation;
+        private Vector2 _spritePosition;
+        private float _angle = 0.0F;
+        private Random _randomSource;
+
+        private const int heightMargin = 150;
+        private const int widthMargin = 125;
 
         public Game1()
         {
@@ -41,14 +48,17 @@ namespace Furret2
             uint initialStyle = GetWindowLong(hWnd, -20);
             SetWindowLong(hWnd, -20, initialStyle | 0x80000 | 0x20);
 
-            _graphics.PreferredBackBufferWidth = 500;
-            _graphics.PreferredBackBufferHeight = 400;
+            _graphics.PreferredBackBufferWidth = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+            _graphics.PreferredBackBufferHeight = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+            Window.Position = new Point(0, 0);
             _graphics.ApplyChanges();
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            _spritePosition = new Vector2(250, 200);
+            _randomSource = new Random();
 
             base.Initialize();
         }
@@ -77,7 +87,15 @@ namespace Furret2
             _characterSpriteAnimation.Update(0.16F);
 
             // TODO: Add your update logic here
-            MoveWindow();
+            if (_spritePosition.X < -125
+                || _spritePosition.X > GraphicsDevice.Viewport.Bounds.Width + widthMargin
+                || _spritePosition.Y < -100
+                || _spritePosition.Y > GraphicsDevice.Viewport.Bounds.Height + heightMargin)
+            {
+                SetRandomStartPoint();
+            }
+            else
+                UpdatePosition();
 
             base.Update(gameTime);
         }
@@ -88,18 +106,24 @@ namespace Furret2
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            _spriteBatch.Draw(_characterSpriteAnimation, new Vector2(250, 200), 0.0F);
+            _spriteBatch.Draw(_characterSpriteAnimation, _spritePosition, _angle);
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
-        private void MoveWindow()
+        private void SetRandomStartPoint()
         {
-            if (this._form.Left >= System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width)
-                this._form.Left = 0 - 500;
-            else
-                this._form.Left += 4;
+            _angle = (float)(_randomSource.NextDouble() * Math.PI * 2);
+            _spritePosition.X = (int)((GraphicsDevice.Viewport.Bounds.Width / 2 + widthMargin) + (Math.Cos(_angle) * 1200));
+            _spritePosition.Y = (int)((GraphicsDevice.Viewport.Bounds.Height / 2 + heightMargin) + (Math.Sin(_angle) * 800));
+        }
+
+        private void UpdatePosition()
+        {
+            int speed = 4;
+            _spritePosition.X += (int)(Math.Cos(_angle) * -speed);
+            _spritePosition.Y += (int)(Math.Sin(_angle) * -speed);
         }
     }
 }
