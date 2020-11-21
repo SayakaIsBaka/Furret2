@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+<Asset Type="System.Collections.Generic.Dictionary[System.String, Microsoft.Xna.Framework.Rectangle]">
+<Item><Key>Furret Walk 60FPS Green Screen0000</Key><Value>0 0 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0001</Key><Value>501 0 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0002</Key><Value>0 401 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0003</Key><Value>501 401 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0004</Key><Value>1002 0 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0005</Key><Value>1002 401 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0006</Key><Value>1503 0 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0007</Key><Value>1503 401 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0008</Key><Value>0 802 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0009</Key><Value>0 1203 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0010</Key><Value>501 802 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0011</Key><Value>501 1203 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0012</Key><Value>1002 802 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0013</Key><Value>1002 1203 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0014</Key><Value>1503 802 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0015</Key><Value>1503 1203 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0016</Key><Value>2004 0 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0017</Key><Value>2004 401 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0018</Key><Value>2505 0 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0019</Key><Value>2004 802 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0020</Key><Value>2505 401 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0021</Key><Value>3006 0 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0022</Key><Value>2004 1203 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0023</Key><Value>2505 802 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0024</Key><Value>3006 401 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0025</Key><Value>3507 0 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0026</Key><Value>2505 1203 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0027</Key><Value>3006 802 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0028</Key><Value>3507 401 500 400</Value></Item>
+<Item><Key>Furret Walk 60FPS Green Screen0029</Key><Value>3006 1203 500 400</Value></Item>
+</Asset>
+</XnaContent>
