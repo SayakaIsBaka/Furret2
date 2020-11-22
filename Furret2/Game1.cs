@@ -32,6 +32,8 @@ namespace Furret2
 
         private const int heightMargin = 260;
         private const int widthMargin = 260;
+        private int canvasHeight;
+        private int canvasWidth;
 
         public Game1()
         {
@@ -48,9 +50,12 @@ namespace Furret2
             uint initialStyle = GetWindowLong(hWnd, -20);
             SetWindowLong(hWnd, -20, initialStyle | 0x80000 | 0x20);
 
+            canvasHeight = System.Windows.Forms.SystemInformation.VirtualScreen.Height;
+            canvasWidth = System.Windows.Forms.SystemInformation.VirtualScreen.Width;
+
             _graphics.PreferredBackBufferWidth = 500;
             _graphics.PreferredBackBufferHeight = 500;
-            Window.Position = new Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2) - (_graphics.PreferredBackBufferWidth / 2), (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2) - (_graphics.PreferredBackBufferHeight / 2));
+            Window.Position = new Point((canvasWidth / 2) - (_graphics.PreferredBackBufferWidth / 2), (canvasHeight / 2) - (_graphics.PreferredBackBufferHeight / 2));
             _graphics.ApplyChanges();
         }
 
@@ -88,9 +93,9 @@ namespace Furret2
 
             // TODO: Add your update logic here
             if (_spritePosition.X < -widthMargin
-                || _spritePosition.X > GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width + widthMargin
+                || _spritePosition.X > canvasWidth + widthMargin
                 || _spritePosition.Y < -heightMargin
-                || _spritePosition.Y > GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width + heightMargin)
+                || _spritePosition.Y > canvasHeight + heightMargin)
             {
                 SetRandomStartPoint();
             }
@@ -115,8 +120,8 @@ namespace Furret2
         private void SetRandomStartPoint()
         {
             _angle = (float)(_randomSource.NextDouble() * Math.PI * 2);
-            _spritePosition.X = (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2) + (Math.Cos(_angle) * ((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width + 700) / 2)));
-            _spritePosition.Y = (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2) + (Math.Sin(_angle) * ((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height + 550) / 2)));
+            _spritePosition.X = (int)((canvasWidth / 2) + (Math.Cos(_angle) * ((canvasWidth + 700) / 2)));
+            _spritePosition.Y = (int)((canvasHeight / 2) + (Math.Sin(_angle) * ((canvasHeight + 550) / 2)));
             UpdateWindowPosition();
         }
 
