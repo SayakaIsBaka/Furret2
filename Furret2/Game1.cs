@@ -32,8 +32,10 @@ namespace Furret2
 
         private const int heightMargin = 260;
         private const int widthMargin = 260;
-        private int canvasHeight;
-        private int canvasWidth;
+        private int canvasXMax;
+        private int canvasYMax;
+        private int canvasXMin;
+        private int canvasYMin;
 
         public Game1()
         {
@@ -50,12 +52,11 @@ namespace Furret2
             uint initialStyle = GetWindowLong(hWnd, -20);
             SetWindowLong(hWnd, -20, initialStyle | 0x80000 | 0x20);
 
-            canvasHeight = System.Windows.Forms.SystemInformation.VirtualScreen.Height;
-            canvasWidth = System.Windows.Forms.SystemInformation.VirtualScreen.Width;
+            SetScreenBounds();
 
             _graphics.PreferredBackBufferWidth = 500;
             _graphics.PreferredBackBufferHeight = 500;
-            Window.Position = new Point((canvasWidth / 2) - (_graphics.PreferredBackBufferWidth / 2), (canvasHeight / 2) - (_graphics.PreferredBackBufferHeight / 2));
+            Window.Position = new Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2) - (_graphics.PreferredBackBufferWidth / 2), (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2) - (_graphics.PreferredBackBufferHeight / 2));
             _graphics.ApplyChanges();
         }
 
@@ -92,10 +93,10 @@ namespace Furret2
             _characterSpriteAnimation.Update(0.16F);
 
             // TODO: Add your update logic here
-            if (_spritePosition.X < -widthMargin
-                || _spritePosition.X > canvasWidth + widthMargin
-                || _spritePosition.Y < -heightMargin
-                || _spritePosition.Y > canvasHeight + heightMargin)
+            if (_spritePosition.X < canvasXMin - widthMargin
+                || _spritePosition.X > canvasXMax + widthMargin
+                || _spritePosition.Y < canvasYMin - heightMargin
+                || _spritePosition.Y > canvasYMax + heightMargin)
             {
                 SetRandomStartPoint();
             }
@@ -120,8 +121,8 @@ namespace Furret2
         private void SetRandomStartPoint()
         {
             _angle = (float)(_randomSource.NextDouble() * Math.PI * 2);
-            _spritePosition.X = (int)((canvasWidth / 2) + (Math.Cos(_angle) * ((canvasWidth + 700) / 2)));
-            _spritePosition.Y = (int)((canvasHeight / 2) + (Math.Sin(_angle) * ((canvasHeight + 550) / 2)));
+            _spritePosition.X = (int)(((canvasXMax + canvasXMin) / 2) + (Math.Cos(_angle) * ((Math.Abs(canvasXMax) + Math.Abs(canvasXMin) + 700) / 2)));
+            _spritePosition.Y = (int)(((canvasYMax + canvasYMin) / 2) + (Math.Sin(_angle) * ((Math.Abs(canvasYMax) + Math.Abs(canvasYMin) + 550) / 2)));
             UpdateWindowPosition();
         }
 
@@ -137,6 +138,19 @@ namespace Furret2
         {
             _form.Top = (int)_spritePosition.Y - 250;
             _form.Left = (int)_spritePosition.X - 250;
+        }
+
+        private void SetScreenBounds()
+        {
+            System.Windows.Forms.Screen[] screens = System.Windows.Forms.Screen.AllScreens;
+            canvasXMin = screens.Min(x => x.Bounds.X);
+            int xMax = screens.Max(x => x.Bounds.X);
+            System.Windows.Forms.Screen[] xMaxScreens = screens.Where(x => x.Bounds.X == xMax).ToArray();
+            canvasXMax = xMaxScreens.Max(x => x.Bounds.Width) + xMax;
+            canvasYMin = screens.Min(x => x.Bounds.Y);
+            int yMax = screens.Max(x => x.Bounds.Y);
+            System.Windows.Forms.Screen[] yMaxScreens = screens.Where(x => x.Bounds.Y == yMax).ToArray();
+            canvasYMax = yMaxScreens.Max(x => x.Bounds.Width) + yMax;
         }
     }
 }
