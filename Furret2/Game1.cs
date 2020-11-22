@@ -48,9 +48,9 @@ namespace Furret2
             uint initialStyle = GetWindowLong(hWnd, -20);
             SetWindowLong(hWnd, -20, initialStyle | 0x80000 | 0x20);
 
-            _graphics.PreferredBackBufferWidth = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
-            _graphics.PreferredBackBufferHeight = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
-            Window.Position = new Point(0, 0);
+            _graphics.PreferredBackBufferWidth = 500;
+            _graphics.PreferredBackBufferHeight = 500;
+            Window.Position = new Point((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2) - (_graphics.PreferredBackBufferWidth / 2), (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2) - (_graphics.PreferredBackBufferHeight / 2));
             _graphics.ApplyChanges();
         }
 
@@ -88,9 +88,9 @@ namespace Furret2
 
             // TODO: Add your update logic here
             if (_spritePosition.X < -widthMargin
-                || _spritePosition.X > GraphicsDevice.Viewport.Bounds.Width + widthMargin
+                || _spritePosition.X > GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width + widthMargin
                 || _spritePosition.Y < -heightMargin
-                || _spritePosition.Y > GraphicsDevice.Viewport.Bounds.Height + heightMargin)
+                || _spritePosition.Y > GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width + heightMargin)
             {
                 SetRandomStartPoint();
             }
@@ -106,7 +106,7 @@ namespace Furret2
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            _spriteBatch.Draw(_characterSpriteAnimation, _spritePosition, _angle);
+            _spriteBatch.Draw(_characterSpriteAnimation, new Vector2(250, 250), _angle);
             _spriteBatch.End();
 
             base.Draw(gameTime);
@@ -115,8 +115,9 @@ namespace Furret2
         private void SetRandomStartPoint()
         {
             _angle = (float)(_randomSource.NextDouble() * Math.PI * 2);
-            _spritePosition.X = (int)((GraphicsDevice.Viewport.Bounds.Width / 2) + (Math.Cos(_angle) * ((GraphicsDevice.Viewport.Bounds.Width + 700) / 2)));
-            _spritePosition.Y = (int)((GraphicsDevice.Viewport.Bounds.Height / 2) + (Math.Sin(_angle) * ((GraphicsDevice.Viewport.Bounds.Height + 550) / 2)));
+            _spritePosition.X = (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2) + (Math.Cos(_angle) * ((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width + 700) / 2)));
+            _spritePosition.Y = (int)((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2) + (Math.Sin(_angle) * ((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height + 550) / 2)));
+            UpdateWindowPosition();
         }
 
         private void UpdatePosition()
@@ -124,6 +125,13 @@ namespace Furret2
             int speed = 4;
             _spritePosition.X += (int)(Math.Cos(_angle) * -speed);
             _spritePosition.Y += (int)(Math.Sin(_angle) * -speed);
+            UpdateWindowPosition();
+        }
+
+        private void UpdateWindowPosition()
+        {
+            _form.Top = (int)_spritePosition.Y - 250;
+            _form.Left = (int)_spritePosition.X - 250;
         }
     }
 }
