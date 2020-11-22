@@ -30,8 +30,8 @@ namespace Furret2
         private float _angle = 0.0F;
         private Random _randomSource;
 
-        private const int heightMargin = 150;
-        private const int widthMargin = 125;
+        private const int heightMargin = 260;
+        private const int widthMargin = 260;
 
         public Game1()
         {
@@ -57,7 +57,7 @@ namespace Furret2
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _spritePosition = new Vector2(250, 200);
+            _spritePosition = new Vector2(GraphicsDevice.Viewport.Bounds.Width / 2, GraphicsDevice.Viewport.Bounds.Height / 2);
             _randomSource = new Random();
 
             base.Initialize();
@@ -87,9 +87,9 @@ namespace Furret2
             _characterSpriteAnimation.Update(0.16F);
 
             // TODO: Add your update logic here
-            if (_spritePosition.X < -125
+            if (_spritePosition.X < -widthMargin
                 || _spritePosition.X > GraphicsDevice.Viewport.Bounds.Width + widthMargin
-                || _spritePosition.Y < -100
+                || _spritePosition.Y < -heightMargin
                 || _spritePosition.Y > GraphicsDevice.Viewport.Bounds.Height + heightMargin)
             {
                 SetRandomStartPoint();
@@ -115,8 +115,8 @@ namespace Furret2
         private void SetRandomStartPoint()
         {
             _angle = (float)(_randomSource.NextDouble() * Math.PI * 2);
-            _spritePosition.X = (int)((GraphicsDevice.Viewport.Bounds.Width / 2 + widthMargin) + (Math.Cos(_angle) * 1200));
-            _spritePosition.Y = (int)((GraphicsDevice.Viewport.Bounds.Height / 2 + heightMargin) + (Math.Sin(_angle) * 800));
+            _spritePosition.X = (int)((GraphicsDevice.Viewport.Bounds.Width / 2) + (Math.Cos(_angle) * ((GraphicsDevice.Viewport.Bounds.Width + 700) / 2)));
+            _spritePosition.Y = (int)((GraphicsDevice.Viewport.Bounds.Height / 2) + (Math.Sin(_angle) * ((GraphicsDevice.Viewport.Bounds.Height + 550) / 2)));
         }
 
         private void UpdatePosition()
